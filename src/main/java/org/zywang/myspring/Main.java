@@ -1,4 +1,6 @@
-package org.zywang;public class Main {
+package org.zywang.myspring;
+
+public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
