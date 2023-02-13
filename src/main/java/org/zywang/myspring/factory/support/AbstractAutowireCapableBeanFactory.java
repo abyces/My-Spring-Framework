@@ -51,6 +51,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             for (PropertyValue propertyValue: propertyValues.getPropertyValues()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
+
+
+//                if (value instanceof BeanReference) {
+//                    // A 依赖 B，获取 B 的实例化
+//                    BeanReference beanReference = (BeanReference) value;
+//                    value = getBean(beanReference.getBeanName());
+//                }
                 if (value instanceof BeanReference beanReference) {
                     value = getBean(beanReference.getBeanName());
                 }
