@@ -2,7 +2,7 @@ package org.zywang.myspring.test.bean.bean;
 
 public class UserService {
     private String uId;
-    private UserDao userDao;
+    private org.zywang.myspring.test.bean.bean.UserDao userDao;
 
     public void queryUserInfo() {
         System.out.println("query user info: " + userDao.queryUserName(uId));
@@ -16,11 +16,11 @@ public class UserService {
         this.uId = uId;
     }
 
-    public UserDao getUserDao() {
+    public org.zywang.myspring.test.bean.bean.UserDao getUserDao() {
         return userDao;
     }
 
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(org.zywang.myspring.test.bean.bean.UserDao userDao) {
         this.userDao = userDao;
     }
 

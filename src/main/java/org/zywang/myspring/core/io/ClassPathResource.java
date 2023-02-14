@@ -13,7 +13,7 @@ public class ClassPathResource implements Resource{
     private ClassLoader classLoader;
 
     public ClassPathResource(String path) {
-        this.path = path;
+        this(path, (ClassLoader) null);
     }
 
     public ClassPathResource(String path, ClassLoader classLoader) {
@@ -27,7 +27,7 @@ public class ClassPathResource implements Resource{
         InputStream is = classLoader.getResourceAsStream(path);
         if (is == null) {
             throw new FileNotFoundException(
-                    this.path + "cannot be opened because file not exists"
+                    this.path + " cannot be opened because file not exists"
             );
         }
 
