@@ -5,11 +5,12 @@
 
     <bean id="userService" class="org.zywang.myspring.test.bean.UserService">
         <property name="uId" value="10001"/>
-        <property name="location" value="Boston"/>
-        <property name="company" value="Google"/>
+        <property name="company" value="腾讯"/>
+        <property name="location" value="深圳"/>
         <property name="userDao" ref="userDao"/>
-
-
     </bean>
+
+    <bean class="org.zywang.myspring.test.common.MyBeanPostProcessor"/>
+    <bean class="org.zywang.myspring.test.common.MyBeanFactoryPostProcessor"/>
 
 </beans>
