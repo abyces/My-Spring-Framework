@@ -69,4 +69,13 @@ public class ApiTest {
         System.out.println(userService);
     }
 
+    @Test
+    public void test_xml_initAndDestroyMethod() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        System.out.println(userService);
+    }
+
 }

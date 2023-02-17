@@ -1,6 +1,9 @@
 package org.zywang.myspring.test.bean;
 
-public class UserService {
+import org.zywang.myspring.beans.factory.DisposableBean;
+import org.zywang.myspring.beans.factory.InitializingBean;
+
+public class UserService implements InitializingBean, DisposableBean {
     private String uId;
     private String location;
     private String company;
@@ -50,5 +53,15 @@ public class UserService {
                 ", company='" + company + '\'' +
                 ", userDao=" + userDao +
                 '}';
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("Running: UserService.destroy");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("Running: UserService.afterPropertiesSet");
     }
 }
