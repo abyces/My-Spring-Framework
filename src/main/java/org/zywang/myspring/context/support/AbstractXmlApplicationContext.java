@@ -1,7 +1,7 @@
 package org.zywang.myspring.context.support;
 
 import org.zywang.myspring.beans.factory.support.DefaultListableBeanFactory;
-import org.zywang.myspring.beans.factory.support.XmlBeanDefinitionReader;
+import org.zywang.myspring.beans.factory.xml.XmlBeanDefinitionReader;
 
 public abstract class AbstractXmlApplicationContext extends AbstractRefreshableApplicationContext {
 

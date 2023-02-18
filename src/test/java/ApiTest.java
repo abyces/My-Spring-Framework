@@ -5,12 +5,16 @@ import org.zywang.myspring.PropertyValues;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
 import org.zywang.myspring.beans.factory.config.BeanReference;
 import org.zywang.myspring.beans.factory.support.DefaultListableBeanFactory;
-import org.zywang.myspring.beans.factory.support.XmlBeanDefinitionReader;
+import org.zywang.myspring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.zywang.myspring.context.support.ClassPathXmlApplicationContext;
 import org.zywang.myspring.test.bean.UserDao;
 import org.zywang.myspring.test.bean.UserService;
 import org.zywang.myspring.test.common.MyBeanFactoryPostProcessor;
 import org.zywang.myspring.test.common.MyBeanPostProcessor;
+
+import org.openjdk.jol.info.ClassLayout;
+
+import java.util.stream.StreamSupport;
 
 public class ApiTest {
 
@@ -85,8 +89,34 @@ public class ApiTest {
 
         UserService userService = applicationContext.getBean("userService", UserService.class);
         System.out.println(userService);
-        System.out.println("ApplicationContextAware: " + userService.getApplicationContext());
-        System.out.println("BeanFactoryAware: " + userService.getBeanFactory());
+//        System.out.println("ApplicationContextAware: " + userService.getApplicationContext());
+//        System.out.println("BeanFactoryAware: " + userService.getBeanFactory());
+    }
+
+    @Test
+    public void test_prototype() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_prototype.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService01 = applicationContext.getBean("userService", UserService.class);
+        UserService userService02 = applicationContext.getBean("userService", UserService.class);
+        UserService userService03 = applicationContext.getBean("userService", UserService.class);
+
+        System.out.println(userService01);
+        System.out.println(userService02);
+        System.out.println(userService03);
+
+        System.out.println(userService01 + " hashcode: " + Integer.toHexString(userService01.hashCode()));
+        System.out.println(ClassLayout.parseInstance(userService01).toPrintable());
+    }
+
+    @Test
+    public void test_factory_bean() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_prototype.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        System.out.println(userService.queryUserInfo());
     }
 
 }

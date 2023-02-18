@@ -1,4 +1,4 @@
-package org.zywang.myspring.beans.factory.support;
+package org.zywang.myspring.beans.factory.xml;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
@@ -8,6 +8,8 @@ import org.w3c.dom.NodeList;
 import org.zywang.myspring.BeansException;
 import org.zywang.myspring.PropertyValue;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
+import org.zywang.myspring.beans.factory.support.AbstractBeanDefinitionReader;
+import org.zywang.myspring.beans.factory.support.BeanDefinitionRegistry;
 import org.zywang.myspring.core.io.Resource;
 import org.zywang.myspring.core.io.ResourceLoader;
 import org.zywang.myspring.beans.factory.config.BeanReference;
@@ -72,6 +74,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             String className = bean.getAttribute("class");
             String initMethod = bean.getAttribute("init-method");
             String destroyMethodName = bean.getAttribute("destroy-method");
+            String beanScope = bean.getAttribute("scope");
 
             // 获取 Class，方便获取类中的名称
             Class<?> clazz = Class.forName(className);
@@ -86,6 +89,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             BeanDefinition beanDefinition = new BeanDefinition(clazz);
             beanDefinition.setInitMethodName(initMethod);
             beanDefinition.setDestroyMethodName(destroyMethodName);
+
+            if (StrUtil.isNotEmpty(beanScope)) {
+                beanDefinition.setScope(beanScope);
+            }
 
             for (int j = 0; j < bean.getChildNodes().getLength(); j++) {
                 if (!(bean.getChildNodes().item(j) instanceof Element)) continue;
