@@ -13,6 +13,7 @@ import org.zywang.myspring.test.common.MyBeanFactoryPostProcessor;
 import org.zywang.myspring.test.common.MyBeanPostProcessor;
 
 import org.openjdk.jol.info.ClassLayout;
+import org.zywang.myspring.test.event.CustomEvent;
 
 import java.util.stream.StreamSupport;
 
@@ -117,6 +118,13 @@ public class ApiTest {
 
         UserService userService = applicationContext.getBean("userService", UserService.class);
         System.out.println(userService.queryUserInfo());
+    }
+
+    @Test
+    public void test_event() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_event.xml");
+        applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "succ."));
+        applicationContext.registerShutdownHook();
     }
 
 }
