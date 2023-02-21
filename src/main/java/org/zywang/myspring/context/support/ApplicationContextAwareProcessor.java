@@ -1,7 +1,6 @@
 package org.zywang.myspring.context.support;
 
-import org.zywang.myspring.BeansException;
-import org.zywang.myspring.beans.factory.Aware;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.config.BeanPostProcessor;
 import org.zywang.myspring.context.ApplicationContext;
 import org.zywang.myspring.context.ApplicationContextAware;

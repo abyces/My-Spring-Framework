@@ -1,6 +1,6 @@
 package org.zywang.myspring.beans.factory.config;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 
 public interface AutowireCapableBeanFactory {
     /**

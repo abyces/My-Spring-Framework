@@ -1,6 +1,6 @@
 package org.zywang.myspring.beans.factory.support;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.core.io.Resource;
 import org.zywang.myspring.core.io.ResourceLoader;
 

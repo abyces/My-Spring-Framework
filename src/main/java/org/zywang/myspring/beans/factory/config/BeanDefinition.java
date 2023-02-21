@@ -1,6 +1,6 @@
 package org.zywang.myspring.beans.factory.config;
 
-import org.zywang.myspring.PropertyValues;
+import org.zywang.myspring.beans.PropertyValues;
 
 public class BeanDefinition {
 

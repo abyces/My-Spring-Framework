@@ -1,6 +1,6 @@
 package org.zywang.myspring.beans.factory.support;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
 
 import java.lang.reflect.Constructor;

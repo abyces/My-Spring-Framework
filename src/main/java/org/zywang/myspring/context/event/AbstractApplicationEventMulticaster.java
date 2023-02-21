@@ -1,6 +1,6 @@
 package org.zywang.myspring.context.event;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.BeanFactory;
 import org.zywang.myspring.beans.factory.BeanFactoryAware;
 import org.zywang.myspring.context.ApplicationEvent;

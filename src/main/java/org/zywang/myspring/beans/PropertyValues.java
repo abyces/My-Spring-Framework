@@ -1,4 +1,4 @@
-package org.zywang.myspring;
+package org.zywang.myspring.beans;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package org.zywang.myspring.beans.factory.support;
 
 import cn.hutool.core.util.StrUtil;
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.DisposableBean;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
 

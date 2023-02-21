@@ -2,7 +2,7 @@ package org.zywang.myspring.beans.factory.support;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.NoOp;
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
 
 import java.lang.reflect.Constructor;

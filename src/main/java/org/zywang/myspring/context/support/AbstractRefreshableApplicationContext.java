@@ -1,6 +1,6 @@
 package org.zywang.myspring.context.support;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.ConfigurableListableBeanFactory;
 import org.zywang.myspring.beans.factory.support.DefaultListableBeanFactory;
 

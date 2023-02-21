@@ -1,6 +1,6 @@
 package org.zywang.myspring.context.support;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 
 public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContext {
 

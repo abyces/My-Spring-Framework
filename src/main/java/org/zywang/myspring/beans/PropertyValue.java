@@ -1,4 +1,4 @@
-package org.zywang.myspring;
+package org.zywang.myspring.beans;
 
 public class PropertyValue {
     private final String name;

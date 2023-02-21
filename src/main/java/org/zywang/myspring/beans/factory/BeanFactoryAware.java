@@ -1,6 +1,6 @@
 package org.zywang.myspring.beans.factory;
 
-import org.zywang.myspring.BeansException;
+import org.zywang.myspring.beans.BeansException;
 
 /**
  * Interface to be implemented by beans that wish to be aware of their

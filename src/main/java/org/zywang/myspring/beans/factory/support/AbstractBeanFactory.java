@@ -1,10 +1,8 @@
 package org.zywang.myspring.beans.factory.support;
 
-import org.zywang.myspring.BeansException;
-import org.zywang.myspring.beans.factory.BeanFactory;
+import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.factory.FactoryBean;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
-import org.zywang.myspring.beans.factory.config.BeanFactoryPostProcessor;
 import org.zywang.myspring.beans.factory.config.BeanPostProcessor;
 import org.zywang.myspring.beans.factory.config.ConfigurableBeanFactory;
 import org.zywang.myspring.utils.ClassUtils;

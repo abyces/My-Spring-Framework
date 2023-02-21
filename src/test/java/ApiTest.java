@@ -1,7 +1,7 @@
 
 import org.junit.Test;
-import org.zywang.myspring.PropertyValue;
-import org.zywang.myspring.PropertyValues;
+import org.zywang.myspring.beans.PropertyValue;
+import org.zywang.myspring.beans.PropertyValues;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
 import org.zywang.myspring.beans.factory.config.BeanReference;
 import org.zywang.myspring.beans.factory.support.DefaultListableBeanFactory;
@@ -14,8 +14,6 @@ import org.zywang.myspring.test.common.MyBeanPostProcessor;
 
 import org.openjdk.jol.info.ClassLayout;
 import org.zywang.myspring.test.event.CustomEvent;
-
-import java.util.stream.StreamSupport;
 
 public class ApiTest {
 
