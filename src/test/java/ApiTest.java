@@ -1,5 +1,7 @@
 
 import org.junit.Test;
+import org.zywang.myspring.aop.MethodMatcher;
+import org.zywang.myspring.aop.aspectj.AspectJExpressionPointcut;
 import org.zywang.myspring.beans.PropertyValue;
 import org.zywang.myspring.beans.PropertyValues;
 import org.zywang.myspring.beans.factory.config.BeanDefinition;
@@ -7,6 +9,7 @@ import org.zywang.myspring.beans.factory.config.BeanReference;
 import org.zywang.myspring.beans.factory.support.DefaultListableBeanFactory;
 import org.zywang.myspring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.zywang.myspring.context.support.ClassPathXmlApplicationContext;
+import org.zywang.myspring.test.bean.IUserService;
 import org.zywang.myspring.test.bean.UserDao;
 import org.zywang.myspring.test.bean.UserService;
 import org.zywang.myspring.test.common.MyBeanFactoryPostProcessor;
@@ -14,6 +17,10 @@ import org.zywang.myspring.test.common.MyBeanPostProcessor;
 
 import org.openjdk.jol.info.ClassLayout;
 import org.zywang.myspring.test.event.CustomEvent;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public class ApiTest {
 

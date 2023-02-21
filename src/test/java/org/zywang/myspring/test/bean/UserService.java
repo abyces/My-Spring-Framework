@@ -1,20 +1,42 @@
 package org.zywang.myspring.test.bean;
 
+import org.zywang.myspring.aop.Pointcut;
 import org.zywang.myspring.beans.factory.*;
 import org.zywang.myspring.context.ApplicationContext;
 import org.zywang.myspring.context.ApplicationContextAware;
 
+import java.util.Random;
+
+
 /**
- * UserService used for testing prototype
+ * UserService used for testing AOP
  */
-public class UserService {
+public class UserService implements IUserService {
     private String uId;
     private String location;
     private String company;
     private IUserDao userDao;
 
+    @Override
     public String queryUserInfo() {
-        return userDao.queryUserName(uId) + ", " + company + ", " + location;
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return "aaa, 10001, ca";
+    }
+
+    @Override
+    public String register(String userName) {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return "register: " + userName + " succ.";
     }
 
     public String getuId() {
@@ -48,7 +70,57 @@ public class UserService {
     public void setUserDao(IUserDao userDao) {
         this.userDao = userDao;
     }
+
 }
+
+
+
+
+/**
+ * UserService used for testing prototype
+ */
+//public class UserService {
+//    private String uId;
+//    private String location;
+//    private String company;
+//    private IUserDao userDao;
+//
+//    public String queryUserInfo() {
+//        return userDao.queryUserName(uId) + ", " + company + ", " + location;
+//    }
+//
+//    public String getuId() {
+//        return uId;
+//    }
+//
+//    public void setuId(String uId) {
+//        this.uId = uId;
+//    }
+//
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
+//
+//    public String getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(String company) {
+//        this.company = company;
+//    }
+//
+//    public IUserDao getUserDao() {
+//        return userDao;
+//    }
+//
+//    public void setUserDao(IUserDao userDao) {
+//        this.userDao = userDao;
+//    }
+//}
 
 
 /**

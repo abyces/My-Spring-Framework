@@ -1,4 +1,15 @@
 package org.zywang.myspring.aop;
 
-public class MethodMatcher {
+import java.lang.reflect.Method;
+
+public interface MethodMatcher {
+
+    /**
+     * check whether the given method matches
+     * @param method
+     * @param targetClass
+     * @return
+     */
+    boolean matches(Method method, Class<?> targetClass);
+
 }

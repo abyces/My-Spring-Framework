@@ -1,4 +1,12 @@
 package org.zywang.myspring.aop;
 
-public class ClassFilter {
+public interface ClassFilter {
+
+    /**
+     * should the pointcut apply to given interface or class
+     * @param clazz
+     * @return
+     */
+    boolean matches(Class<?> clazz);
+
 }
