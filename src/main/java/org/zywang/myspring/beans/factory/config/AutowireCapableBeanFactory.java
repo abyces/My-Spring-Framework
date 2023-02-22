@@ -1,8 +1,9 @@
 package org.zywang.myspring.beans.factory.config;
 
 import org.zywang.myspring.beans.BeansException;
+import org.zywang.myspring.beans.factory.BeanFactory;
 
-public interface AutowireCapableBeanFactory {
+public interface AutowireCapableBeanFactory extends BeanFactory {
     /**
      * 执行 BeanPostProcessors 接口实现类的 postProcessBeforeInitialization 方法
      *

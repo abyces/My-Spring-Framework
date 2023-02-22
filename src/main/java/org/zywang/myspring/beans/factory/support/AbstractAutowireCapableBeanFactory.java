@@ -6,10 +6,7 @@ import org.zywang.myspring.beans.BeansException;
 import org.zywang.myspring.beans.PropertyValue;
 import org.zywang.myspring.beans.PropertyValues;
 import org.zywang.myspring.beans.factory.*;
-import org.zywang.myspring.beans.factory.config.AutowireCapableBeanFactory;
-import org.zywang.myspring.beans.factory.config.BeanDefinition;
-import org.zywang.myspring.beans.factory.config.BeanPostProcessor;
-import org.zywang.myspring.beans.factory.config.BeanReference;
+import org.zywang.myspring.beans.factory.config.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -23,6 +20,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean = null;
 
         try {
+            // 判断是否返回代理Bean对象
+            bean = resolveBeforeInstantiation(beanName, beanDefinition);
+            if (bean != null) {
+                return bean;
+            }
+            // 实例化bean
             bean = createBeanInstance(beanDefinition, beanName, args);
             // 属性填充
             applyPropertyValues(beanName, bean, beanDefinition);
@@ -41,6 +44,25 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
 
         return bean;
+    }
+
+    protected Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
+        Object bean = applyBeanPostProcessorsBeforeInstantiation(beanDefinition.getBeanClass(), beanName);
+        if (bean != null) {
+            bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        }
+
+        return bean;
+    }
+
+    protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, String beanName) {
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                Object result = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessBeforeInstantiation(beanClass, beanName);
+                if (null != result) return result;
+            }
+        }
+        return null;
     }
 
     protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args) {
@@ -106,7 +128,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
 
         // BeanPostProcessor After处理
-        wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
         return wrappedBean;
     }
 

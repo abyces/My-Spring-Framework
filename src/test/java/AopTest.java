@@ -7,6 +7,7 @@ import org.zywang.myspring.aop.aspectj.AspectJExpressionPointcut;
 import org.zywang.myspring.aop.framework.Cglib2AopProxy;
 import org.zywang.myspring.aop.framework.JdkDynamicAopProxy;
 import org.zywang.myspring.aop.framework.ReflectiveMethodInvocation;
+import org.zywang.myspring.context.support.ClassPathXmlApplicationContext;
 import org.zywang.myspring.test.bean.IUserService;
 import org.zywang.myspring.test.bean.UserService;
 import org.zywang.myspring.test.bean.UserServiceInterceptor;
@@ -88,5 +89,11 @@ public class AopTest {
         System.out.println("Testing Cglib: " + proxy_cglib.register("cba"));
     }
 
+    @Test
+    public void test_aop() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_advice.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println(userService.queryUserInfo());
+    }
 
 }
