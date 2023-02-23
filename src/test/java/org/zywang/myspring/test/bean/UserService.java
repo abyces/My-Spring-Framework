@@ -12,16 +12,11 @@ import java.util.Random;
 
 
 /**
- * UserService used for testing AOP
+ * UserService used for testing Auto Proxy
  */
-@Component("userService")
 public class UserService implements IUserService {
 
-    @Value("${token}")
     private String token;
-
-    @Autowired
-    private UserDao userDao;
 
     @Override
     public String queryUserInfo() {
@@ -31,7 +26,7 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
 
-        return userDao.queryUserName("10001") + ", " + token;
+        return token;
     }
 
     @Override
@@ -60,3 +55,53 @@ public class UserService implements IUserService {
                 '}';
     }
 }
+
+/**
+ * UserService used for testing @Autowired
+ */
+//@Component
+//public class UserService implements IUserService {
+//
+//    @Value("${token}")
+//    private String token;
+//
+//    @Autowired
+//    private UserDao userDao;
+//
+//    @Override
+//    public String queryUserInfo() {
+//        try {
+//            Thread.sleep(new Random(1).nextInt(100));
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return userDao.queryUserName("10001") + ", " + token;
+//    }
+//
+//    @Override
+//    public String register(String userName) {
+//        try {
+//            Thread.sleep(new Random(1).nextInt(100));
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return "register: " + userName + " succ.";
+//    }
+//
+//    public String getToken() {
+//        return token;
+//    }
+//
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "UserService{" +
+//                "token='" + token + '\'' +
+//                '}';
+//    }
+//}

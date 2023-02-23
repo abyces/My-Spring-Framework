@@ -18,9 +18,21 @@ public class AnnotationTest {
         System.out.println(userService);
     }
 
+    /**
+     * 切记在ClasspathBeanDefinitionScanner中，
+     * 注册处理注解的 BeanPostProcessor（@Autowired、@Value）
+     * -- AutowiredAnnotationBeanPostProcessor (extends InstantiationAwareBeanPostProcessor).
+     */
     @Test
     public void test_autowired_value() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println(userService.queryUserInfo());
+    }
+
+    @Test
+    public void test_autoProxy() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring_advice.xml");
         IUserService userService = applicationContext.getBean("userService", IUserService.class);
         System.out.println(userService.queryUserInfo());
     }
