@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="userDao" class="org.zywang.myspring.test.bean.UserDao"
-          init-method="initDataMethod" destroy-method="destroyDataMethod"/>
-
-    <bean id="userService" class="org.zywang.myspring.test.bean.UserService">
-        <property name="uId" value="10001"/>
-        <property name="location" value="Boston"/>
-        <property name="company" value="Google"/>
-        <property name="userDao" ref="userDao"/>
-
+    <bean class="org.zywang.myspring.beans.factory.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:token.properties" />
     </bean>
+
+    <context:component-scan base-package="org.zywang.myspring.test.bean" />
 
 </beans>

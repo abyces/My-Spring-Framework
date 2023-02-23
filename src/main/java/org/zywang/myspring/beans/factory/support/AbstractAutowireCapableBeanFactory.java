@@ -25,9 +25,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             if (bean != null) {
                 return bean;
             }
-            // 实例化bean
+            // 实例化Bean
             bean = createBeanInstance(beanDefinition, beanName, args);
-            // 属性填充
+            // 在设置Bean属性之前，允许BeanPostProcessor修改属性值
+            applyBeanPostProcessorsBeforeApplyingPropertyValues(beanName, bean, beanDefinition);
+            // Bean属性填充
             applyPropertyValues(beanName, bean, beanDefinition);
             // Bean初始化以及BeanPostProcessor前置、后置处理
             bean = initializeBean(beanName, bean, beanDefinition);
@@ -44,6 +46,19 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
 
         return bean;
+    }
+
+    protected void applyBeanPostProcessorsBeforeApplyingPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+        for (BeanPostProcessor beanPostProcessor: getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
+                if (pvs != null) {
+                    for (PropertyValue propertyValue: pvs.getPropertyValues()) {
+                        beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+                    }
+                }
+            }
+        }
     }
 
     protected Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
@@ -79,7 +94,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
     }
-
 
     protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
@@ -190,7 +204,4 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return instantiationStrategy;
     }
 
-    public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
-        this.instantiationStrategy = instantiationStrategy;
-    }
 }

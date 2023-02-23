@@ -5,6 +5,7 @@ import org.zywang.myspring.aop.*;
 import org.zywang.myspring.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.zywang.myspring.aop.framework.ProxyFactory;
 import org.zywang.myspring.beans.BeansException;
+import org.zywang.myspring.beans.PropertyValues;
 import org.zywang.myspring.beans.factory.BeanFactory;
 import org.zywang.myspring.beans.factory.BeanFactoryAware;
 import org.zywang.myspring.beans.factory.config.InstantiationAwareBeanPostProcessor;
@@ -63,5 +64,10 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return bean;
+    }
+
+    @Override
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+        return pvs;
     }
 }

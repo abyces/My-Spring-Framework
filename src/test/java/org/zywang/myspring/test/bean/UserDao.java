@@ -1,21 +1,18 @@
 package org.zywang.myspring.test.bean;
 
+import org.zywang.myspring.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class UserDao {
     private static Map<String, String> hashMap = new HashMap<>();
 
-    public void initDataMethod() {
-        System.out.println("Running: init-method");
-        hashMap.put("10001", "a");
-        hashMap.put("10002", "b");
-        hashMap.put("10003", "c");
-    }
-
-    public void destroyDataMethod() {
-        System.out.println("Running: destroy-method");
-        hashMap.clear();
+    static {
+        hashMap.put("10001", "aaa, US, CA");
+        hashMap.put("10002", "bbb, CHN, SH");
+        hashMap.put("10003", "ccc, JPN, TK");
     }
 
     public String queryUserName(String uId) {

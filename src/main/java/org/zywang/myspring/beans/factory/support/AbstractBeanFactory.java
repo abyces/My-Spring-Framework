@@ -6,6 +6,7 @@ import org.zywang.myspring.beans.factory.config.BeanDefinition;
 import org.zywang.myspring.beans.factory.config.BeanPostProcessor;
 import org.zywang.myspring.beans.factory.config.ConfigurableBeanFactory;
 import org.zywang.myspring.utils.ClassUtils;
+import org.zywang.myspring.utils.StringValueResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,20 @@ import java.util.List;
 // - 因此这里相当于在链条服务上截取一段拓展额外的服务，再把链条缝上
 public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
+    /**
+     * ClassLoader to resolve bean class names with, if necessary
+     */
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
-    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
+
+    /**
+     * BeanPostProcessors to apply in createBean
+     */
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
+
+    /**
+     * String resolvers to apply e.g. to annotation attribute values
+     */
+    private final List<StringValueResolver> embeddedValueResolvers = new ArrayList<>();
 
     @Override
     public Object getBean(String name) throws BeansException {
@@ -37,6 +50,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
         Object sharedInstance = getSingleton(name);
 
         if (sharedInstance != null) {
+            // FactoryBean
             return (T) getObjectForBeanInstance(sharedInstance, name);
         }
 
@@ -68,6 +82,21 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
         this.beanPostProcessors.remove(beanPostProcessor);
         this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    @Override
+    public void addEmbeddedValueResolver(StringValueResolver valueResolver) {
+        this.embeddedValueResolvers.add(valueResolver);
+    }
+
+    @Override
+    public String resolveEmbeddedValue(String value) {
+        String result = value;
+        for (StringValueResolver valueResolver: this.embeddedValueResolvers) {
+            result = valueResolver.resolveStringValue(result);
+        }
+
+        return result;
     }
 
     public List<BeanPostProcessor> getBeanPostProcessors() {

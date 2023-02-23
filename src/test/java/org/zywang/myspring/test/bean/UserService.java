@@ -2,6 +2,8 @@ package org.zywang.myspring.test.bean;
 
 import org.zywang.myspring.aop.Pointcut;
 import org.zywang.myspring.beans.factory.*;
+import org.zywang.myspring.beans.factory.annotation.Autowired;
+import org.zywang.myspring.beans.factory.annotation.Value;
 import org.zywang.myspring.context.ApplicationContext;
 import org.zywang.myspring.context.ApplicationContextAware;
 import org.zywang.myspring.stereotype.Component;
@@ -12,9 +14,14 @@ import java.util.Random;
 /**
  * UserService used for testing AOP
  */
-@Component
+@Component("userService")
 public class UserService implements IUserService {
+
+    @Value("${token}")
     private String token;
+
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public String queryUserInfo() {
@@ -24,7 +31,7 @@ public class UserService implements IUserService {
             e.printStackTrace();
         }
 
-        return "aaa, 10001, ca";
+        return userDao.queryUserName("10001") + ", " + token;
     }
 
     @Override
