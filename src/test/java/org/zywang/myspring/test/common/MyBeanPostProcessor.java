@@ -8,10 +8,10 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if ("userService".equals(beanName)) {
-            UserService userService = (UserService) bean;
-            userService.setLocation("(*) New York");
-        }
+//        if ("userService".equals(beanName)) {
+//            UserService userService = (UserService) bean;
+//            userService.setLocation("(*) New York");
+//        }
         return bean;
     }
 
