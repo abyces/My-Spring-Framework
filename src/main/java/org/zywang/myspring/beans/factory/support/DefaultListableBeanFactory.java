@@ -69,7 +69,4 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         throw new BeansException(requiredType + " expected single bean but found " + beanNames.size() + ": " + beanNames);
     }
 
-    public Map<String, BeanDefinition> getBeanDefinitionMap() {
-        return beanDefinitionMap;
-    }
 }

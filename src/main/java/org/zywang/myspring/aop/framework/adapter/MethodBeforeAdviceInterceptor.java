@@ -24,4 +24,8 @@ public class MethodBeforeAdviceInterceptor implements MethodInterceptor {
     public void setAdvice(MethodBeforeAdvice advice) {
         this.advice = advice;
     }
+
+    public MethodBeforeAdvice getAdvice() {
+        return advice;
+    }
 }

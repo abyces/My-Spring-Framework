@@ -31,20 +31,4 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 
     protected abstract void loadBeanDefinitions(DefaultListableBeanFactory beanFactory);
 
-    @Override
-    public <T> T getBean(Class<T> requiredType) throws BeansException {
-        List<String> beanNames = new ArrayList<>();
-        for (Map.Entry<String, BeanDefinition> entry: beanFactory.getBeanDefinitionMap().entrySet()) {
-            Class beanClass = entry.getValue().getBeanClass();
-            if (requiredType.isAssignableFrom(beanClass)) {
-                beanNames.add(entry.getKey());
-            }
-        }
-
-        if (beanNames.size() == 1) {
-            return getBean(beanNames.get(0), requiredType);
-        }
-
-        throw new BeansException(requiredType + " expected single bean but found " + beanNames.size() + ": " + beanNames);
-    }
 }

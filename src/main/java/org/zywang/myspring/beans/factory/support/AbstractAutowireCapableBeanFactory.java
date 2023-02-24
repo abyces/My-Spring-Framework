@@ -17,16 +17,27 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
-        Object bean = null;
+        // 判断是否返回代理 Bean 对象
+        Object bean = resolveBeforeInstantiation(beanName, beanDefinition);
+        if (null != bean) {
+            return bean;
+        }
 
+        return doCreateBean(beanName, beanDefinition, args);
+    }
+
+    protected Object doCreateBean(String beanName, BeanDefinition beanDefinition, Object[] args) {
+        Object bean = null;
         try {
-            // 判断是否返回代理Bean对象
-            bean = resolveBeforeInstantiation(beanName, beanDefinition);
-            if (bean != null) {
-                return bean;
-            }
-            // 实例化Bean
+            // 实例化
             bean = createBeanInstance(beanDefinition, beanName, args);
+
+            // 处理循环依赖，将实例化的Bean提前放入缓存中暴露出来
+            if (beanDefinition.isSingleton()) {
+                Object finalBean = bean;
+                addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, beanDefinition, finalBean));
+            }
+
             // 实例化后判断
             boolean continueWithPropertyPopulation = applyBeanPostProcessorsAfterInstantiation(beanName, bean);
             if (!continueWithPropertyPopulation) {
@@ -46,11 +57,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
         // 判断bean是Singleton还是Prototype
+        Object exposedObject = bean;
         if (beanDefinition.isSingleton()) {
-            registerSingleton(beanName, bean);
+            exposedObject = getSingleton(beanName);
+            registerSingleton(beanName, exposedObject);
         }
 
-        return bean;
+        return exposedObject;
+
+    }
+
+    protected Object getEarlyBeanReference(String beanName, BeanDefinition beanDefinition, Object bean) {
+        Object exposedObject = bean;
+        for (BeanPostProcessor beanPostProcessor: getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                exposedObject = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).getEarlyBeanReference(exposedObject, beanName);
+                if (exposedObject == null) return exposedObject;
+            }
+        }
+
+        return exposedObject;
     }
 
     private boolean applyBeanPostProcessorsAfterInstantiation(String beanName, Object bean) {
